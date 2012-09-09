@@ -6,9 +6,24 @@
  */
 class BrandModelsController extends AppController {
 	public $name = 'BrandModels';
+	public $components = array('Paginator');
+	public $helpers = array('Paginator');
+	public $paginate = array(
+			'BrandModel' => array(
+					'limit' => 10
+			)
+	);
 	
 	public function add() {
-		
+		if(!empty($this->request->data)) {
+			if($this->BrandModel->save($this->request->data)){
+				$this->Session->setFlash(__('Brand has been saved.'));
+			} else {
+				$this->Session->setFlash(__('An error occurred.'));
+			}
+		}
+		$brands = $this->BrandModel->Brand->find('list');
+		$this->set(compact('brands'));
 	}
 	
 	public function edit() {

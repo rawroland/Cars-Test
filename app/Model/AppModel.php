@@ -31,4 +31,31 @@ App::uses('Model', 'Model');
  * @package       app.Model
  */
 class AppModel extends Model {
+	public $defaultConditions = array('deleted' => 0);
+
+	/**
+	 * Add default find conditions.
+	 * @see Model::beforeFind()
+	 */
+	public function beforeFind($queryData) {
+		if(!empty($this->defaultConditions)) {
+			$this->prependAlias();
+			$queryData['conditions'] = array_merge((array) $this->defaultConditions, (array)$queryData['conditions']);
+		}
+
+		return $queryData;
+	}
+
+	/**
+	 * Prepend the conditions' fields with their models if not already done.
+	 */
+	private function prependAlias() {
+		foreach ($this->defaultConditions as $key => $value) {
+			$position = strpos($key, '.');
+			if($position === FALSE) {
+				$this->defaultConditions[$this->alias . '.' . $key] = $this->defaultConditions[$key];
+				unset($this->defaultConditions[$key]);
+			}
+		}
+	}
 }

@@ -1,18 +1,19 @@
 <?php
 /**
  * Model class for brands database
- *
+ * Uses Containable behaviour.
  */
 class Brand extends AppModel {
 	public $name = 'Brand';
 	public $cacheQueries = TRUE;//Cache for single request.
+	public $actsAs = array('Containable');
 
 	//Associations with other models
 	public $hasMany = array(
 			'BrandModel' => array(
 					'className' => 'BrandModel',
 					'foreignKey' => 'brand_id',
-					'conditions' => '',
+					'conditions' => array('BrandModel.deleted' => 0),
 					'order' => '',
 					'limit' => '',
 					'offset' => '',

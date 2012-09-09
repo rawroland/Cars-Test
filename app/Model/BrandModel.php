@@ -6,13 +6,14 @@
 class BrandModel extends AppModel {
 	public $name = 'BrandModel';
 	public $cacheQueries = TRUE;//Cache for single request.
+	public $actsAs = array('Containable');
 
 	//Associations with other models
 	public $belongsTo = array(
 			'Brand' => array(
 					'className' => 'Brand',
 					'foreignKey' => 'brand_id',
-					'conditions' => '',
+					'conditions' => array('Brand.deleted' => 0),
 					'order' => '',
 					'type' => '',
 					'fields' => ''
