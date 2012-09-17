@@ -32,19 +32,18 @@ class BrandsController extends AppController {
 	 * @param int $id The brand's id
 	 */
 	public function edit($brandId = NULL) {
-		$this->Brand->contain();
-		if(empty($this->request->data)) {
-			if(!empty($brandId)) {
-				$this->request->data = $this->Brand->findById($brandId);
-			} else  {
-				$this->Session->setFlash(__('Invalid id.'));
-			}
+		if(empty($brandId)) {
+			$this->Session->setFlash(__('Invalid id.'));
 		} else {
-			$this->Brand->id = $brandId;
-			if($this->Brand->save($this->request->data)){
-				$this->Session->setFlash(__('Brand has been edited.'));
+			if(empty($this->request->data)) {
+				$this->request->data = $this->Brand->findById($brandId);
 			} else {
-				$this->Session->setFlash(__('An error occurred.'));
+				$this->Brand->id = $brandId;
+				if($this->Brand->save($this->request->data)){
+					$this->Session->setFlash(__('Brand has been edited.'));
+				} else {
+					$this->Session->setFlash(__('An error occurred.'));
+				}
 			}
 		}
 		$this->request->data = $this->Brand->findById($brandId);
@@ -78,6 +77,8 @@ class BrandsController extends AppController {
 	public function delete($brandId) {
 		if(empty($brandId)) {
 			$this->Session->setFlash(__('Invalid id!'));
+		} else if (!$this->Brand->find('count', array('conditions' => array('Brand.id' => $brandId)))) {
+			$this->Session->setFlash(__('Brand type does not exist!'));
 		} else {
 			$this->Brand->id = $brandId;
 			if($this->Brand->saveField('deleted', 1)) {

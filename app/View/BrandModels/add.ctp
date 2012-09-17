@@ -9,5 +9,5 @@ echo $this->Form->input('name', array('label' => __('Name'))) . '<br><br>';
 echo $this->Form->label('brand_id');
 $attributes = array('empty' => 'Choose a Brand');
 echo $this->Form->select('brand_id', $brands, $attributes);
-echo $this->Form->end(__('Add brand'));
+echo $this->Form->end(__('Add model'));
 ?>

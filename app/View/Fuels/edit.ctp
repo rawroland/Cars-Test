@@ -1,14 +1,14 @@
 <?php 
-echo $this->Html->tag('h3', __('Edit Brands'), array());
+echo $this->Html->tag('h3', __('Edit Fuels'), array());
 echo $this->Session->flash();
-echo $this->Form->create('Brand', array(
+echo $this->Form->create('Fuel', array(
 		'url' => array(
-				'controller' => 'brands',
+				'controller' => 'fuels',
 				'action' => 'edit',
-				$this->request->data['Brand']['id']
+				$this->request->data['Fuel']['id']
 		),
 		'inputDefaults' => array('label' => FALSE, 'div' => FALSE)
 ));
 echo $this->Form->input('name', array('label' => __('Name')));
-echo $this->Form->end(__('Edit brand'));
+echo $this->Form->end(__('Edit fuel'));
 ?>
