@@ -72,16 +72,16 @@ class CategoriesController extends AppController {
 	}
 
 	/**
-	 * Delete a fuel. Not functional yet, add a deleted field to the database table
-	 * @param int $fuelId The fuel
+	 * Delete a category. Not functional yet, add a deleted field to the database table
+	 * @param int $categoryId The category
 	 */
-	public function delete($fuelId) {
-		if(empty($fuelId)) {
+	public function delete($categoryId) {
+		if(empty($categoryId)) {
 			$this->Session->setFlash(__('Invalid id!'));
-		} else if (!$this->Category->find('count', array('conditions' => array('Category.id' => $fuelId)))) {
+		} else if (!$this->Category->find('count', array('conditions' => array('Category.id' => $categoryId)))) {
 			$this->Session->setFlash(__('Category type does not exist!'));
 		} else {
-			$this->Category->id = $fuelId;
+			$this->Category->id = $categoryId;
 			if($this->Category->saveField('deleted', 1)) {
 				$this->Session->setFlash(__('Category deleted.'));
 			} else {

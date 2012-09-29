@@ -7,7 +7,7 @@ echo 'Sort by: ' . $this->Paginator->sort('name', __('Name')) . ' |  ' .
 	<?php foreach ($models as $key => $model) :?>
 	<?php 
 	$mName = $this->Html->link($model['BrandModel']['name'], array(
-			'controller' => 'brands',
+			'controller' => 'brand_models',
 			'action' => 'view',
 			$model['BrandModel']['id']
 	));
@@ -16,7 +16,7 @@ echo 'Sort by: ' . $this->Paginator->sort('name', __('Name')) . ' |  ' .
 	<ul>
 		<?php 
 		$bName = $this->Html->link($model['Brand']['name'], array(
-				'controller' => 'brand_models',
+				'controller' => 'brands',
 				'action' => 'view',
 				$model['Brand']['id']
 		));

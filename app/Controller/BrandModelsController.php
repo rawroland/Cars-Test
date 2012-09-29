@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Brands Controller.
+ * BrandModels Controller.
  *
  */
 class BrandModelsController extends AppController {
@@ -75,7 +75,7 @@ class BrandModelsController extends AppController {
 	public function delete($modelId) {
 		if(empty($modelId)) {
 			$this->Session->setFlash(__('Invalid id!'));
-		} else if (!$this->BrandModel->find('count', array('conditions' => array('BrandModel.id' => $fuelId)))) {
+		} else if (!$this->BrandModel->find('count', array('conditions' => array('BrandModel.id' => $modelId)))) {
 			$this->Session->setFlash(__('Model does not exist!'));
 		} else {
 			$this->BrandModel->id = $modelId;
