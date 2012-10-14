@@ -31,6 +31,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 
 		echo $this->Html->css('cake.generic');
 
+		echo $this->Html->script('jquery-1.8.2');
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');

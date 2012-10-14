@@ -88,5 +88,10 @@ class BrandsController extends AppController {
 			}
 		}
 	}
+	
+	public function isAuthorized($user) {
+    $permitted = parent::isAuthorized($user);
+    return $permitted;
+	}
 }
 ?>

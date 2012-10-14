@@ -3,6 +3,9 @@
  * Model class for users database
  * Uses Containable behaviour.
  */
+
+APP::uses('AuthComponent', 'Controller/Component');
+
 class User extends AppModel {
   public $name = 'User';
   public $cacheQueries = TRUE;//Cache for single request.
@@ -54,17 +57,66 @@ class User extends AppModel {
               'on' => NULL,
               'message' => 'Passwords do not match!'
           )
+      ),
+      'email' =>  array(
+          'validEmail' => array(
+              'rule' => 'email',
+              'required' => FALSE,
+              'allowEmpty' => FALSE,
+              'on' => NULL,
+              'message' => 'Please provide a valid email address!'
+          ),
+          'uniqueEmail' => array(
+              'rule' => 'isUnique',
+              'required' => FALSE,
+              'allowEmpty' => FALSE,
+              'on' => NULL,
+              'message' => 'This email exists already!'
+          )
       )
   );
-  
-  public function fieldsMatch($check = array(), $fieldName = NULL) {
-    return $check['password'] === $this->data[$this->name][$fieldName];
+
+  /**
+   * Hash passwords
+   * @see Model::beforeSave()
+   */
+  public function beforeSave($options = array()) {
+    if (!empty($this->data[$this->alias]['password'])) {
+      $this->data[$this->alias]['password'] = AuthComponent::password($this->data[$this->alias]['password']);
+    }
+
+    return TRUE;
   }
-  
-  public function register($user = NULL) { 
+
+  /**
+   * Custom validation rule for matching fields.
+   * @param array $check the value of the field to be checked. array('field' => 'value')
+   * @param String $fieldName The field to be checked against.
+   * @return True if they match and false otherwise
+   */
+  public function fieldsMatch($check = array(), $fieldName = NULL) {
+    return $check['password'] === $this->data[$this->alias][$fieldName];
+  }
+
+  public function register($user = NULL) {
     if(!empty($user)) {
-      $this->save($user, TRUE);
+      if($this->save($user, TRUE)) {
+        return TRUE;
+      } else {
+        return FALSE;
+      }
     }
   }
+
+  /**
+   * Check if the profile belongs to the user
+   * @param int $user The requesting user.
+   * @param int $user The logged user.
+   * @return True or false.
+   */
+  public function belongsTo($requester, $loggedUser) {
+    return $this->field('id', array('id' => $requester)) === $loggedUser;
+  }
+
 }
 ?>

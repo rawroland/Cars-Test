@@ -32,6 +32,31 @@ App::uses('Controller', 'Controller');
  * @link http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
-	public $helpders = array('Form', 'Html');
-	public $components = array('DebugKit.Toolbar', 'Session');
+  public $helpers = array('Form', 'Html');
+  public $components = array(
+      'DebugKit.Toolbar', 'Session',
+      'Auth' => array(
+          'authenticate' => array(
+              'Form' => array(
+                  'fields' => array('username' => 'email')
+              )
+          ),
+          'authorize' => array('Controller'),
+          'authError' => 'Not permitted!',
+          'logoutRedirect' => array('controller' => 'users', 'action' => 'login')
+      )
+  );
+
+  public function beforeFilter() {
+    //$this->Auth->allow();
+    $this->Auth->loginRedirect = array('controller' => 'users', 'action' => 'view', $this->Auth->user('id'));
+  }
+  
+  public function isAuthorized($user) {
+    $permitted = FALSE;
+    if($user['role'] == 'admin') {
+      $permitted = TRUE;
+    }
+    return $permitted;
+  }
 }
