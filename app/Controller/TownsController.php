@@ -15,6 +15,14 @@ class TownsController extends AppController {
 	);
 
 	/**
+	 * (non-PHPdoc)
+	 * @see Controller::beforeFilter()
+	 */
+	public function beforeFilter() {
+	  $this->Auth->allow();
+	}
+	
+	/**
 	 * Add a town.
 	 */
 	public function add() {

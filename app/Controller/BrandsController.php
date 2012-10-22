@@ -6,14 +6,20 @@
  */
 class BrandsController extends AppController {
 	public $name = 'Brands';
-	public $components = array('Paginator');
-	public $helpers = array('Paginator');
 	public $paginate = array(
 			'Brand' => array(
 					'limit' => 10
 			)
 	);
 
+	/**
+	 * (non-PHPdoc)
+	 * @see Controller::beforeFilter()
+	 */
+	public function beforeFilter() {
+	  $this->Auth->allow();
+	}
+	
 	/**
 	 * Add a brand
 	 */

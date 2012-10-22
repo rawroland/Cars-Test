@@ -15,6 +15,14 @@ class CountriesController extends AppController {
 	);
 
 	/**
+	 * (non-PHPdoc)
+	 * @see Controller::beforeFilter()
+	 */
+	public function beforeFilter() {
+	  $this->Auth->allow();
+	}
+	
+	/**
 	 * Add a country
 	 */
 	public function add() {

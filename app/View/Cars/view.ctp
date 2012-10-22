@@ -9,9 +9,9 @@ $images = Hash::extract($car, 'Image.{n}[type=/image/]');
 
 $expListElement = '';
 foreach ($images as $index => $image) {
-  $thumbs[$index]['location'] = str_replace('img/', '', $thumbs[$index]['location']);//TEMP
   $expThumb = $this->Html->image($thumbs[$index]['location'], array('alt' => 'Thumbnail'));
-  $expLink = $this->Html->link($expThumb, '/' .  $image['location'], array('escape' => FALSE));
+  $imgUrl = $this->Html->url('/' . IMAGES_URL .  $image['location'], FALSE);
+  $expLink = $this->Html->link($expThumb, $imgUrl, array('escape' => FALSE));
   $expListElement .= $this->Html->tag('li', $expLink, array('escape' => FALSE, 'style' => 'float: left;'));
 }
 echo $this->Html->tag('ul', $expListElement, array('id' => 'images-exposed', 'escape' => FALSE, 'style' => 'display: inline;list-style-type: none;
@@ -24,6 +24,6 @@ $(function() {
 </script>
 <style type="text/css">
 ul#images-exposed li {
-float: left;
+	float: left;
 }
 </style>

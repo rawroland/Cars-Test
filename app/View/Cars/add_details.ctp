@@ -25,6 +25,8 @@ echo $this->Form->label('seats', 'Number of seats');
 echo $this->Form->select('seats', $seats, array('empty' => 'Unknown')) . '<br>';
 echo $this->Form->label('doors', 'Number of doors');
 echo $this->Form->select('doors', $doors, array('empty' => 'Unknown')) . '<br>';
+echo $this->Form->label('power');
+echo $this->Form->text('power', array('type' => 'numeric')) . '<br>';
 echo $this->Form->label('mileage');
 echo $this->Form->text('mileage', array('type' => 'numeric')) . '<br>';
 echo $this->Form->label('tank_capacity');
@@ -47,5 +49,7 @@ echo $this->Form->label('regions');
 echo $this->Form->select('region_id', $regions, array('empty' => '...')) . '<br>';
 echo $this->Form->label('towns');
 echo $this->Form->select('town_id', $towns, array('empty' => '...')) . '<br>';
+echo $this->Form->label('description');
+echo $this->Form->textarea('description') . '<br>';
 echo $this->Form->end(__('Next step'));
 ?>

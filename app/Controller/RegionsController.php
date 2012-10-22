@@ -14,6 +14,14 @@ class RegionsController extends AppController {
 			)
 	);
 
+	/**
+	 * (non-PHPdoc)
+	 * @see Controller::beforeFilter()
+	 */
+	public function beforeFilter() {
+	  $this->Auth->allow();
+	}
+	
 	public function add() {
 		if(!empty($this->request->data)) {
 			if($this->Region->save($this->request->data)){
