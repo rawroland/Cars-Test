@@ -16,7 +16,7 @@ class User extends AppModel {
       'Car' => array(
           'className' => 'Car',
           'foreignKey' => 'user_id',
-          'conditions' => array('User.deleted' => 0),
+          'conditions' => array('Car.deleted' => 0),
           'order' => '',
           'limit' => '',
           'offset' => '',

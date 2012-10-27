@@ -88,7 +88,7 @@ $seatsMax = $this->Form->select('seats_max', $seats, array('multiple' => FALSE, 
 $seatLegend = $this->Html->tag('legend', 'Seats');
 echo $this->Html->tag('fieldset', $seatLegend . 'Von ' . $seatsMin . ' Bis ' . $seatsMax, array('escape' => FALSE));
 
-$fuelsTxt = $this->Form->select('fuels', $fuels, array('multiple' => 'checkbox'));
+$fuelsTxt = $this->Form->select('fuels', $fuels, array('multiple' => 'checkbox', 'hiddenField' => FALSE));
 $fuelsLegend = $this->Html->tag('legend', 'Fuels');
 echo $this->Html->tag('fieldset', $fuelsLegend . $fuelsTxt, array('escape' => FALSE));
 

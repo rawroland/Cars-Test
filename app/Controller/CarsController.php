@@ -7,7 +7,7 @@
 class CarsController extends AppController {
   public $name = 'Cars';
   public $components = array('RequestHandler');
-//   public $helpers = array('Paginator');
+  //   public $helpers = array('Paginator');
   public $uses = array('Car', 'Brand', 'BrandModel', 'Category', 'Country', 'Fuel', 'Region', 'Town', 'User', 'Image');
   public $paginate = array(
       'Car' => array(
@@ -78,6 +78,8 @@ class CarsController extends AppController {
         if(!empty($this->request->data)) {
           if($this->User->register($this->request->data)) {
             $userId = $this->User->getLastInsertID();
+            $user = $this->User->findById($userId);
+            $this->Auth->login($user['User']);
           } else {
             $this->Session->setFlash('The user could not be saved!');
             return;
@@ -149,6 +151,7 @@ class CarsController extends AppController {
         } else {
           $this->Session->setFlash('Car has been saved without images!');
         }
+        $this->Session->delete('session_id');
         $this->redirect(array('controller' => 'cars', 'action' => 'view', $carId));
       }
     } else {
@@ -215,6 +218,14 @@ class CarsController extends AppController {
       $conditions[] = array('Car.power <' => $this->request->query['power_max']);
     }
 
+    if (!empty($this->request->query['year_min'])) {
+      $conditions[] = array('Car.produced >' => $this->request->query['year_min']);
+    }
+
+    if (!empty($this->request->query['year_max'])) {
+      $conditions[] = array('Car.produced <' => $this->request->query['year_max']);
+    }
+
     if (!empty($this->request->query['km_min'])) {
       $conditions[] = array('Car.mileage >' => $this->request->query['km_min']);
     }
@@ -231,12 +242,37 @@ class CarsController extends AppController {
       $conditions[] = array('Car.seats <' => $this->request->query['seats_max']);
     }
 
+    if (!empty($this->request->query['fuels'])) {
+      $fuels = array();
+      foreach ($this->request->query['fuels'] as $key => $fuel) {
+        if (!empty($fuel)) {
+          $fuels[] = $fuel;
+        };
+      }
+      if (!empty($fuels)) {
+        $conditions[] = array('Car.fuel_id' => $fuels);
+      }
+    }
+
+    if (!empty($this->request->query['colours'])) {
+      $colours = array();
+      foreach ($this->request->query['colours'] as $key => $colour) {
+        if (!empty($colour)) {
+          $colours[] = $colour;
+        };
+      }
+      if (!empty($colours)) {
+        $conditions[] = array('Car.colour' => $colours);
+      }
+    }
+
     $this->paginate = array(
         'Car' => array(
             'limit' => 10,
             'order' => array(
                 'Car.created' => 'ASC'
             ),
+            'paramType' => 'querystring',
             'conditions' => $conditions,
             'contain' => array(
                 'Brand' => array('name'),
@@ -247,7 +283,7 @@ class CarsController extends AppController {
             )
         )
     );
-    $cars = $this->paginate('Car', $conditions);
+    $cars = $this->paginate('Car');
     $this->set(compact('cars'));
   }
 
@@ -359,6 +395,13 @@ class CarsController extends AppController {
       );
     }
     //     $this->Image->saveMany($images);
+  }
+  
+  /**
+   * For testing
+   */
+  public function central() {
+    
   }
 
 }

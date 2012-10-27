@@ -6,14 +6,20 @@
  */
 class BrandModelsController extends AppController {
 	public $name = 'BrandModels';
-	public $components = array('Paginator');
-	public $helpers = array('Paginator');
 	public $paginate = array(
 			'BrandModel' => array(
 					'limit' => 10
 			)
 	);
-
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see Controller::beforeFilter()
+	 */
+	public function beforeFilter() {
+	  $this->Auth->allow();
+	}
+	
 	public function add() {
 		if(!empty($this->request->data)) {
 			if($this->BrandModel->save($this->request->data)){

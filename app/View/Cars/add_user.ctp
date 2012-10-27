@@ -28,7 +28,11 @@ if(empty($loggedUser)) {
   echo $this->Form->input('User.password_confirmation', array('type' => 'password')) . '<br>';
   echo $this->Form->end('Register');
 } else {
-  var_dump($loggedUser);
+  foreach ($loggedUser as $key => $value) {
+    if($key != 'id' && $key != 'group_id' && $key != 'deleted' && $key != 'password') {
+      echo $key . ': ' . $value . '<br>';
+    }
+  }
   echo $this->Form->end('Confirm user');
 }
 

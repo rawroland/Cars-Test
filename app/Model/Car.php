@@ -65,6 +65,14 @@ class Car extends AppModel {
           'order' => '',
           'type' => 'left',
           'fields' => ''
+      ),
+      'User' => array(
+          'className' => 'User',
+          'foreignKey' => 'user_id',
+          'conditions' => array('User.deleted' => 0),
+          'order' => '',
+          'type' => 'left',
+          'fields' => ''
       )
   );
 

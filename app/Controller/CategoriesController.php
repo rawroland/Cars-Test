@@ -15,6 +15,14 @@ class CategoriesController extends AppController {
 	);
 
 	/**
+	 * (non-PHPdoc)
+	 * @see Controller::beforeFilter()
+	 */
+	public function beforeFilter() {
+	  $this->Auth->allow();
+	}
+	
+	/**
 	 * Add a category
 	 */
 	public function add() {

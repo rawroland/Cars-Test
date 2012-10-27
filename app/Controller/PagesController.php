@@ -45,6 +45,14 @@ class PagesController extends AppController {
  */
 	public $uses = array();
 
+	/**
+	 * (non-PHPdoc)
+	 * @see Controller::beforeFilter()
+	 */
+	public function beforeFilter() {
+	  $this->Auth->allow();
+	}
+	
 /**
  * Displays a view
  *

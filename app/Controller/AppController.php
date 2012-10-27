@@ -43,6 +43,7 @@ class AppController extends Controller {
           ),
           'authorize' => array('Controller'),
           'authError' => 'Not permitted!',
+          'loginRedirect' => '/',
           'logoutRedirect' => array('controller' => 'users', 'action' => 'login')
       )
   );
